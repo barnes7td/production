@@ -24,4 +24,8 @@ describe CSVReader do
       #a_hash.should eq({})
     #end
   end
+  describe 'read' do
+    # MRG: Not sure how best to test read yet
+    it 'should read the csv file correctly'
+  end
 end
