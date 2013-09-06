@@ -14,12 +14,12 @@ class CSVReader
     end
   end
 
-  def create_hash(an_array)
+  def create_hash(values)
     h = {}
     @headers.each_with_index do |header, i|
       #remove new lines from the value
-      value = value[i].strip.gsub('"', '')
-      h[header] = value unless value.emtpy?
+      value = values[i].strip.gsub('"', '')
+      #h[header] = value unless value.emtpy?
     end
     h
   end
