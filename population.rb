@@ -11,10 +11,10 @@ class Population
 
   def menu
     system 'clear'
-    p "Population Menu"
-    p "---------------"
+    puts "Population Menu"
+    puts "---------------"
     @analytics.options.each do |opt|
-      p "#{opt[:menu_id]}. #{opt[:menu_title]}"
+      puts "#{opt[:menu_id]}. #{opt[:menu_title]}"
     end
   end
 
@@ -30,7 +30,7 @@ class Population
       # run their choice
       stop = @analytics.run(choice)
       if stop == :exit
-        p "Exiting"
+        puts "Exiting"
       else
         print "\nHit enter to continue "
         gets

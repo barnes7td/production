@@ -17,9 +17,9 @@ class Analytics
   end
 
   def run(choice)
-    opt = @option.select {|o| o[:menu_id] == choice }.first
+    opt = @options.select {|o| o[:menu_id] == choice }.first
     if opt.nil?
-      p "Invalid choice"
+      puts "Invalid choice"
     elsif opt[:method] != :exit
       self.send opt[:method]
       :done
@@ -29,7 +29,7 @@ class Analytics
   end
 
   def how_many
-    p "There are #{@areas.length} areas"
+    puts "There are #{@areas.length} areas"
   end
 
   def smallest_pop
@@ -37,7 +37,7 @@ class Analytics
       x.estimated_population <=> y.estimated_population
     end
     smallest = sorted.drop_while { |i| i.estimated_population == 0 }.first
-    p "#{smallest.city}, #{smallest.state} has the smallest population of #{smallest.estimated_population}"
+    puts "#{smallest.city}, #{smallest.state} has the smallest population of #{smallest.estimated_population}"
   end
 
   def largest_pop
@@ -46,12 +46,12 @@ class Analytics
     end
     largest = sorted.reverse.drop_while { |i| i.estimated_population == 0 }.first
 
-    p "#{largest.city}, #{largest.state} has the largest population of #{largest.estimated_population}"
+    puts "#{largest.city}, #{largest.state} has the largest population of #{largest.estimated_population}"
   end
 
   def california_zips
     c = @areas.count { |a| a.state == "CA" }
-    p "There are #{c} zip code matches in California"
+    puts "There are #{c} zip code matches in California"
   end
 
   def zip_info
@@ -59,10 +59,10 @@ class Analytics
     zip = gets.strip.to_i
     zips = @areas.select { |a| a.zipcode == zip }
     unless zips.empty?
-      p ""
+      puts ""
       zips.each { |z| p z }
     else
-      p "Zip not found"
+      puts "Zip not found"
     end
   end
 
