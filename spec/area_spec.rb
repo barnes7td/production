@@ -1,8 +1,17 @@
 require 'area'
 
 # MRG: There's too much data duplication here.
+# TDB: Use "let" to minimize data duplication.
 
 describe Area do
+
+  let(:area) do 
+      Area.new( { zipcode: 60601, 
+                  estimated_population: 2707000,
+                  city: "Chicago",
+                  state: "IL" } ) 
+  end
+
   describe 'initialize' do
     it 'should set defaults' do
       area = Area.new({})
@@ -12,10 +21,6 @@ describe Area do
       area.state.should eq("n/a")
     end
     it 'should set values' do
-      area = Area.new({ zipcode: 60601, 
-        estimated_population: 2707000,
-        city: "Chicago",
-        state: "IL"})
       area.zipcode.should eq(60601)
       area.estimated_population.should eq(2707000)
       area.city.should eq("Chicago")
@@ -24,10 +29,6 @@ describe Area do
   end  
   describe 'to_s' do
     it 'should return a valid string' do
-      area = Area.new({ zipcode: 60601,
-        estimated_population: 2707000,
-        city: "Chicago",
-        state: "IL"})
       area.to_s.should eq("Chicago, IL 60601 has 2707000 people.")
     end
   end
