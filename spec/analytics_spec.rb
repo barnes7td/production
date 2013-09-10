@@ -1,47 +1,74 @@
 require 'analytics'
 
 describe Analytics do
+  let(:area_1) { double("area") }
+  let(:area_2) { double("area") }
+
+  let(:analytics) do
+    analytics = Analytics.new([area_1, area_2])
+  end
+
   describe 'options' do
-    it 'should be able to get and set options' do 
-      analytics = Analytics.new([])
-      analytics.respond_to?(:options).should eq(true)
-      analytics.respond_to?(:options=).should eq(true)
-    end
-  end
-  describe 'initialize' do
-    it 'should init areas'
-  end
-  describe 'set_options' do
-    it 'should set options properly' do      
-      analytics = Analytics.new([])
-      analytics.options[0][:menu_id].should eq(1)
-      analytics.options[0][:menu_title].should eq('Areas count')
-      # MRG: Not sure how best to test this
-      #analytics.options[0][:method].respond_to?(:how_many).should eq(true)
+    it 'should be able to get and set options' do
+      # TDB: More flexible method. Can change with new options without adjusting.
 
-      # MRG: fill in the remaining options
+      seletion = rand(analytics.options.length-1)
+      expect(analytics.options[2].has_key?(:menu_id)).to be_true
+      expect(analytics.options[2].has_key?(:menu_title)).to be_true
+      expect(analytics.options[2].has_key?(:method)).to be_true
     end
   end
-  describe 'run' do
+
+  # describe 'initialize' do
+  #   TDB: areas and options tested in other areas.
+  # end
+
+  # describe 'set_options' do
+    #TDB: This is a GUI function. This is more of integration test territory IMO.
+    #     I would test options but not this method. It is really a private method
+    #     (shouldn't be called from outside the class) and therefor I won't test
+    #     See Sandi Metz for reasoning.
+  # end
+
+  # describe 'run' do
     # MRG: Not sure how to test this
-    it 'should take a number as an argument'
-    it 'should pick the option and run the appropriate method'
-    it 'should allow the user to exit the program'
-    it 'should throw an approrpiate error when user picks invalid option'
-  end
-  describe 'how_many' do
-    it 'should return how many areas ther are' do
-        analytics = Analytics.new([])
+    # TDB: Really an integration test (not a unit test)
+  #   it 'should take a number as an argument'
+  #   it 'should pick the option and run the appropriate method'
+  #   it 'should allow the user to exit the program'
+  #   it 'should throw an approrpiate error when user picks invalid option'
+  # end
 
+  describe 'how_many' do
+    it 'returns how many areas there are' do
+      expect(analytics.how_many).to eq("There are 2 areas")
     end
   end
+
   describe 'smallest_pop' do
-    it 'should print the smallest city and state'
+    #TDB: This many stubs is a probably a sign that the analytics class
+    #     knows too much about area
+
+    it 'returns the smallest city and state' do
+      area_1.stub(:estimated_population).and_return(10)
+      area_1.stub(:city).and_return("Podunk")
+      area_1.stub(:state).and_return("IN")
+      area_2.stub(:estimated_population).and_return(20)
+      expect(analytics.smallest_pop).to eq("Podunk, IN has the smallest population of 10")
+    end
   end
+
   describe 'largest_pop' do
-    it 'should print the largest city and population'
+    it 'should print the largest city and population' do
+      area_1.stub(:estimated_population).and_return(10)
+      area_2.stub(:estimated_population).and_return(20)
+      area_2.stub(:city).and_return("Podunk")
+      area_2.stub(:state).and_return("IN")
+      expect(analytics.largest_pop).to eq("Podunk, IN has the largest population of 20")
+    end
   end
-  describe 'zip_info' do
-    it 'should display zipcode info'
-  end
+
+  # describe 'zip_info' do
+  #   it 'should display zipcode info'
+  # end
 end
